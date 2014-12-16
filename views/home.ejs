@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html ng-app>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+
+  </head>
+  <body>
+<div class="container">
+
+<section ng-controller="NotasController">
+
+
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">NoteShare</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="{{activeTodas}}"><a href="#" ng-click='listaNotas()' >Todas</a></li>
+        <li class="{{activeExclusiva}}"><a href="#" ng-click='listaNotasUsuario()' >Minhas Notas</a></li>
+
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+
+       <li><a href="#"><span class="date sub-text">{{usuariosession.nome}}</span> | <span class="date sub-text">{{usuariosession.email}}</span></a></li>
+        <li> <a href="/logout">Sair</a></li>
+
+
+        
+
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+
+
+	<div class="page-header text-center">
+
+
+	</div>
+
+	<div class="row">
+
+		<!-- LOCAL INFORMATION -->
+
+
+
+
+
+
+
+
+	
+		<div class="col-sm-6">
+
+
+
+
+	 
+
+    <div ng-repeat='nota in notas ' class="panel panel-warning" >
+
+
+
+			   
+
+
+               <div class="panel-heading" placement="left" >
+ 
+   <div class="close btn-group "  align="right" ng-show="nota.usuario_id==usuariosession.usuario_id">
+  <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+     <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li><a href="#" ng-click='editarNota(nota.id)'>Editar</a></li>
+    <li><a href="#" ng-click='excluirNota(nota.id)'>Excluir</a></li>
+  </ul>
+</div> 
+
+
+   <h3 class="panel-title" >{{nota.titulo}} - {{nota.data  | date:"dd/MM/yyyy '-' hh:mm"}}</h3>
+
+        <!-- Single button -->
+
+      </div>
+      <div class="panel-body">
+      {{nota.descricao}}
+
+
+   
+					<p>
+						<strong>Autor:</strong> {{nota.nome}}
+						<strong>contato:</strong> {{nota.email}}
+					</p>
+
+
+
+<div class="detailBox">
+    <div class="titleBox">
+      <label  >Comentários</label>
+        
+    </div>
+    <div class="actionBox" >
+        <ul class="commentList"  >
+           <li  ng-repeat='comentario in nota.comentarios   track by $index'  >
+                <div class="commenterImage">
+                  <img src="/img/avatar.png" />
+                </div>
+                <div class="commentText">
+                    <p class="">{{comentario.descricao}}</p> <span class="date sub-text">{{comentario.data  | date:'MMM d, y' }} {{comentario.nome}}</span>
+
+                </div>
+            </li>
+
+
+
+
+
+        </ul>
+        <form class="form-inline" role="form" ng-submit='adicionaComentario(nota.id,nota.comentario_descricao)'>
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="Escreva um comentário"  ng-model='nota.comentario_descricao' required />
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default">Enviar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+      </div>
+
+
+				
+					
+
+    </div>
+
+        
+
+
+</div>
+
+
+
+
+
+
+
+
+		<!-- FACEBOOK INFORMATION -->
+		<div class="col-sm-6">
+			<div class="well">
+	    <h1 >{{comandoNota}} Nota </h1> 
+	    <form class="form-user" ng-submit='salvaNota(nota.id)'>
+	    	<div class="form-group"> 
+
+
+
+
+	    		<input type='text' placeholder='Título' class="form-control" ng-model='nota.titulo' required/>
+	    	</div>
+	    	<div class="form-group">
+	    	 <textarea rows="6" cols="60" placeholder="Descrição" class="form-control"   ng-model='nota.descricao' required>
+	    	 </textarea>  
+	    	</div>
+	    		<button type='submit' class='btn btn-primary'>Salvar</button>
+          <button type='button' ng-click="cancelar()" class='btn btn-cancel'>Cancelar</button>
+	    </form>
+
+
+			</div>
+		</div>
+	</div>
+
+	</section>
+
+
+	<div class="row">
+
+
+
+	<script type="text/javascript">
+		var controllers = {};
+	</script>
+	<script src="/javascripts/angular.js"></script>
+	<script src="/javascripts/jquery-1.11.1.min.js"></script>
+	<script src="/javascripts/bootstrap.js"></script>
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script> 
+    
+	<script src="/javascripts/modules/LogonController.js"></script>
+
+	<script src="/javascripts/modules/NotaController.js"></script> 
+
+
+
+	<div class="text-center">
+		<p> <a href="#">NoteShare</a> </p>
+		
+	</div>
+
+</div>
+</body>
+</html>

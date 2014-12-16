@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html ng-app>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="NoteShare">
+    <meta name="author" content="NoteShare">
+    <title>NoteShare - Compartilhe Anotações</title>
+
+
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+    <link rel="stylesheet" href="/stylesheets/noteshare.css" />
+    <link rel="stylesheet" href="/font-awesome-4.1.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Montserrat:400,700"  type="text/css">
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Kaushan+Script'  type='text/css'>
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'  type='text/css'>
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'  type='text/css'>
+
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" class="index">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">NoteShare</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#services">ENTRAR</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#uso">COMO USAR?</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#sobre">SOBRE</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#time">TIME</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <header>
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in">Compartilhe Ideias</div>
+         
+                <a href="#services" class="page-scroll btn btn-xl">INSCREVA-SE AGORA </a>
+                 <a href="#services" class="page-scroll btn btn-xl">ENTRE </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- SERVIÇOS -->
+    <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                
+                    <h3 class="section-subheading text-muted">Compartilhe suas Notas.</h3>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-4">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">Abra uma conta</h3>
+            </div>
+  
+            <div class="panel-body" ng-controller="UsuarioController">
+            
+         
+                               <form class="form-user" ng-submit='adicionaUsuario()' >
+
+                 
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Nome"  ng-model='usuario.nome'required  data-validation-required-message="Informe o Nome.">
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" placeholder="E-mail"  ng-model='usuario.email' required data-validation-required-message="Informe o E-mail.">
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Senha" ng-model='usuario.senha'  required data-validation-required-message="Informe a Senha.">
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                  <div class="form-group">
+                                  <div class="clearfix"></div>
+                                  </div>
+
+                              <div class="form-group">
+                                <div id="success"></div>
+
+                                <button type="submit" class="btn btn-large btn-primary">Inscrever</button>
+                     
+                            </div>
+                                  <div class="form-group">
+                                  <div class="clearfix"></div>
+                                  </div>
+                          
+                    </form>
+
+   </div>
+
+
+          </div>
+
+
+
+                </div>
+                <div class="col-md-4">
+
+
+        <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">Acesso</h3>
+            </div>
+            <div class="panel-body" ng-controller="LogonController">
+            <div ng-controller="AlertController">
+                <div class="alert alert-{{alert.type}} alert-dismissible" role="alert"  ng-repeat="alert in alerts"  type="{{alert.type}}"  >
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                     {{alert.msg}}
+                </div>
+
+            </div>
+ <form class="form-signin" role="form" ng-submit='entrar()'>
+        <h2 class="form-signin-heading">Entre</h2>
+        <div class="form-group">
+        <input type="text" class="form-control" placeholder="E-mail" ng-model='logon.email' required autofocus>
+        </div>
+        <div class="form-group">
+        <input type="password" class="form-control" placeholder="Senha" ng-model='logon.senha' required>
+        </div>
+        <label class="checkbox">
+          <input type="checkbox" value="remember_me" ng-model='logon.remember_me'> Mantenha-me conectado
+        </label>
+        <button class="btn btn-large btn-primary" type="submit">Entrar</button>
+      </form>
+</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- USO -->
+    <section id="uso" class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">COMO USAR?</h2>
+                    <h3 class="section-subheading text-muted">NoteShare - Compartilhe suas anotações.</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/portfolio/1.png" class="img-responsive" alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4>INSCREVA-SE</h4>
+                        <p class="text-muted">Registrando no NoteShare</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/portfolio/2.png" class="img-responsive" alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4>+ Notas</h4>
+                        <p class="text-muted">Adicione uma nota</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/portfolio/3.png" class="img-responsive" alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4>Todas as Notas</h4>
+                        <p class="text-muted">Notas compartilhadas</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/portfolio/4.png" class="img-responsive" alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4>Minhas Notas</h4>
+                        <p class="text-muted">Somente as minhas notas</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal5" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/portfolio/5.png" class="img-responsive" alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4>Comentários</h4>
+                        <p class="text-muted">Comente as notas de forma simples em tempo real</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/portfolio/6.png" class="img-responsive" alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4>NoteShare</h4>
+                        <p class="text-muted">Compartilhe com seus amigos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE-->
+    <section id="sobre">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Sobre</h2>
+                    <h3 class="section-subheading text-muted">NoteShare - Compartilhe a sua mente.</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="timeline">
+                        <li>
+                            <div class="timeline-image">
+                                <img class="img-circle img-responsive" src="img/about/1.jpg" alt="">
+                            </div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>Setembro 2014</h4>
+                                    <h4 class="subheading">Humilde começo</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">Da inspiração para realização, 
+                                     interconectando pessoas e compartilhando ideias...
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-inverted">
+                            <div class="timeline-image">
+                                <img class="img-circle img-responsive" src="img/about/2.jpg" alt="">
+                            </div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>Outubro 2014</h4>
+                                    <h4 class="subheading">Nascimento do Evernote</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">Seguindo as diretrizes dos participantes , o serviço web NoteShare foi aberto  em 17 de outubro de 2014!</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="timeline-inverted">
+                              <div class="timeline-image">
+                                <br><h4>Junte-se
+                                    
+                                    <br> a Nós!</h4>
+                            </div>
+                            </div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>Novembro 2014</h4>
+                                    <h4 class="subheading">Aplicativo</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">O uso do serviço on-line é gratuito.</p>
+                                </div>
+                            </div>
+                        </li>
+
+             
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIME -->
+    <section id="time" class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Nossa Equipe</h2>
+                    <h3 class="section-subheading text-muted">Seja parte disso.</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="team-member">
+                        <img src="img/team/1.jpg" class="img-responsive img-circle" alt="">
+                        <h4>Vera Kopp</h4>
+                        <p class="text-muted">Principle Lead </p>
+                        <ul class="list-inline social-buttons">
+                            <li><a href="#"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="team-member">
+                        <img src="img/team/2.jpg" class="img-responsive img-circle" alt="">
+                        <h4>Luciano Portela</h4>
+                        <p class="text-muted">Software Engineer</p>
+                        <ul class="list-inline social-buttons">
+                            <li><a target="_blank" href="https://twitter.com/lucianoportella"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a target="_blank" href="https://www.facebook.com/portela.luciano"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a target="_blank" href="https://www.linkedin.com/pub/luciano-portela/31/967/574"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="team-member">
+                        <img src="img/team/3.jpg" class="img-responsive img-circle" alt="">
+                        <h4>Fábio Rogério SJ</h4>
+                        <p class="text-muted">Lead Developer</p>
+                        <ul class="list-inline social-buttons">
+                            <li><a href="#"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    </section>
+
+   
+
+    
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="copyright"> &copy; NoteShare 2014</span>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline social-buttons">
+                        <li><a href="#"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline quicklinks">
+                        <li><a href="#">Privacidade</a>
+                        </li>
+                        <li><a href="#">Termos de Utilização</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+  
+    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>INSCREVA-SE</h2>
+                            <p class="item-intro text-muted">Central de Acesso NoteShare.</p>
+                            <img class="img-responsive" src="img/portfolio/1-preview.png" alt="">
+                            <p>Essa área é possivel registrar no plataforma web do NoteShare!</p>
+                            <p>
+                                <strong>Tenha liberdade para navegar</a>.</p>
+                            <ul class="list-inline">
+                                <li>Data: Outubro 2014</li>
+                                <li>Area: Central de Acesso</li>
+                        
+                            </ul>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Fechar </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ 
+    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>Notas</h2>
+                            <p class="item-intro text-muted">Crie suas anotações.</p>
+                            <img class="img-responsive img-centered" src="img/portfolio/2-preview.png" alt="">
+                            <p>Essa área da plataforma permite você cria e compartilhar suas anotações.</p>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Fechar </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <!-- Project Details Go Here -->
+                            <h2>TODAS AS NOTAS</h2>
+                            <p class="item-intro text-muted">Menu superior de Navegação NoteShare.</p>
+                            <img class="img-responsive img-centered" src="img/portfolio/3-preview.png" alt="">
+                            <p>Navegue na parte superior da aplicação que permite visualizar 
+                            as anotações realizadas por todos os usuários da plataforma.</p>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Fechar </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                          
+                            <h2>MINHAS NOTAS</h2>
+                            <p class="item-intro text-muted">Menu superior de Navegação NoteShare.</p>
+                            <img class="img-responsive img-centered" src="img/portfolio/4-preview.png" alt="">
+                           <p>Navegue na parte superior da aplicação que permite visualizar 
+                            somente as suas anotações.</p>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Fechar </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ 
+    <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <!-- Project Details Go Here -->
+                            <h2>COMENTÁRIOS</h2>
+                            <p class="item-intro text-muted">Comente qualquer anotação.</p>
+                            <img class="img-responsive img-centered" src="img/portfolio/5-preview.png" alt="">
+                            <p>O NoteShare possibilita você realizar comentários diversos em diferentes notas.</p>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Fechar </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <!-- Project Details Go Here -->
+                            <h2>NOTESHARE</h2>
+                            <p class="item-intro text-muted">Compartilhe idéias.</p>
+                            <img class="img-responsive img-centered" src="img/portfolio/6-preview.png" alt="">
+                            <p>Compartilhe suas idéias com a plataforma NoteShare.</p>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <script src="/javascripts/angular.js"></script>
+    <script src="/javascripts/jquery-1.11.1.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <script src="/javascripts/classie.js"></script>
+    <script src="/javascripts/cbpAnimatedHeader.js"></script>
+    <script src="/javascripts/jqBootstrapValidation.js"></script>
+    <script src="/javascripts/agency.js"></script>
+
+
+
+
+
+
+
+
+
+    <script type="text/javascript">
+        var controllers = {};
+    </script>
+    <script src="/javascripts/modules/LogonController.js"></script>
+    <script src="/javascripts/modules/UsuarioController.js"></script>
+    <script src="/javascripts/modules/AlertController.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
